@@ -17,7 +17,10 @@ https://aws.amazon.com/sdk-for-python/?nc1=h_ls
 
 ## How to use
 - Source file preparation
-CSV file format is super simple. The requirement for csv file is only consecutive _TextId_ and _SourceText_ header.
+CSV file format requires 2 thing. super simple.
+- - Consecutive _TextId_ and _SourceText_ header.
+- - UTF-8 encoding.
+Typical use case is creating CSV file with Microsoft Excel with Save As CSV file.
 
 ```
 TextId,SourceText
@@ -27,7 +30,13 @@ TextId,SourceText
 - Basic command line
 
 ```
-translate_csv.py -s <Source langage code> -t <Target language code> -c <source csv file.>
+translate_csv.py --from <Source langage code> --to <Target language code> -c <source csv file.>
+```
+
+Example:
+Translate from English ito Japanese:
+```
+translate_csv.py --from en --to ja -c translate.csv
 ```
 
 And you will get ouput file as "source csv file" + _LanguageCode_ + .csv. For example you tranlated English from Japanese then the output file name will be translate_ja.csv
