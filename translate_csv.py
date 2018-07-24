@@ -78,10 +78,13 @@ class Translate(threading.Thread):
             'TargetLanguageCode' : self.target_lang_code
         }
         translated_text = translate.translate_text(**request)['TranslatedText']
+        # Japanese encoding
+        if self.target_lang_code == "ja":
+            translated_text = translated_text.encode('shift_jis')
         self.result = {
             "TextId" : self.text_id,
             "SourceText" : self.text,
-            "TranslatedText" : translated_text.encode('shift_jis')
+            "TranslatedText" : translated_text
         }
 
 # -- main ---
