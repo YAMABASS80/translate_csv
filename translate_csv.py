@@ -89,6 +89,7 @@ class Translate(threading.Thread):
 
 
 if __name__ == '__main__':
+    threads = []
     with codecs.open(csv_file,'r',"utf-8", "ignore") as f:
         reader = csv.DictReader(f)
 
