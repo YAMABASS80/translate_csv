@@ -87,49 +87,46 @@ class Translate(threading.Thread):
             "TranslatedText" : translated_text
         }
 
-# -- main ---
-concurrency = 36
-timeout = 10
-threads = []
 
-with codecs.open(csv_file,'r',"utf-8", "ignore") as f:
-    reader = csv.DictReader(f)
+if __name__ == '__main__':
+    with codecs.open(csv_file,'r',"utf-8", "ignore") as f:
+        reader = csv.DictReader(f)
 
-    # Start translation with parallel
-    print('Translation tasks started.' )
-    results = []
-    for row in reader:
-        thread = Translate(row['TextId'],row['SourceText'],source_lang_code,target_lang_code)
-        thread.start()
-        threads.append(thread)
-        active_threads = threading.activeCount() - 1
+        # Start translation with parallel
+        print('Translation tasks started.' )
+        results = []
+        for row in reader:
+            thread = Translate(row['TextId'],row['SourceText'],source_lang_code,target_lang_code)
+            thread.start()
+            threads.append(thread)
+            active_threads = threading.activeCount() - 1
 
-        # When active threads reaches max threads, suspend threads and collect result.
-        if active_threads > concurrency:
-            for thread in threads:
-                thread.join(timeout)
+            # When active threads reaches max threads, suspend threads and collect result.
+            if active_threads > concurrency:
+                for thread in threads:
+                    thread.join(timeout)
 
-    # Wait all threads completed
-    for thread in threads:
-        thread.join(timeout)
+        # Wait all threads completed
+        for thread in threads:
+            thread.join(timeout)
 
-    # Get translated result to write out.
-    for thread in threads:
-        results.append(thread.get_result())
+        # Get translated result to write out.
+        for thread in threads:
+            results.append(thread.get_result())
 
-    # Sort as source file
-    sorted_results = sorted(results, key=lambda x: x['TextId'])
+        # Sort as source file
+        sorted_results = sorted(results, key=lambda x: x['TextId'])
 
-# Write out
-with open(translated_csv_file, "w") as f:
-    header = [
-        "TextId",
-        "SourceText",
-        "TranslatedText"
-    ]
-    writer = csv.DictWriter(f, fieldnames=header)
-    writer.writeheader()
-    for row in sorted_results:
-        writer.writerow(row)
+    # Write out
+    with open(translated_csv_file, "w") as f:
+        header = [
+            "TextId",
+            "SourceText",
+            "TranslatedText"
+        ]
+        writer = csv.DictWriter(f, fieldnames=header)
+        writer.writeheader()
+        for row in sorted_results:
+            writer.writerow(row)
 
-print('Translation tasks finished. result files: ' + translated_csv_file  )
+    print('Translation tasks finished. result files: ' + translated_csv_file  )
