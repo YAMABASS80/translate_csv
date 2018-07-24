@@ -116,7 +116,7 @@ if __name__ == '__main__':
             results.append(thread.get_result())
 
         # Sort as source file
-        sorted_results = sorted(results, key=lambda x: x['TextId'])
+        sorted_results = sorted(results, key=lambda x: int(x['TextId']))
 
     # Write out
     with open(translated_csv_file, "w") as f:
