@@ -88,8 +88,8 @@ class Translate(threading.Thread):
         }
 
 # -- main ---
-max_threads = 36
-thread_timeout = 10
+concurrency = 36
+timeout = 10
 threads = []
 
 with codecs.open(csv_file,'r',"utf-8", "ignore") as f:
@@ -105,13 +105,13 @@ with codecs.open(csv_file,'r',"utf-8", "ignore") as f:
         active_threads = threading.activeCount() - 1
 
         # When active threads reaches max threads, suspend threads and collect result.
-        if active_threads > max_threads:
+        if active_threads > concurrency:
             for thread in threads:
-                thread.join(thread_timeout)
+                thread.join(timeout)
 
     # Wait all threads completed
     for thread in threads:
-        thread.join(thread_timeout)
+        thread.join(timeout)
 
     # Get translated result to write out.
     for thread in threads:
