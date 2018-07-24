@@ -30,13 +30,13 @@ TextId,SourceText
 - Basic command line
 
 ```
-translate_csv.py --from <Source langage code> --to <Target language code> -c <source csv file.>
+python translate_csv.py --from <Source langage code> --to <Target language code> -c <source csv file.>
 ```
 
 Example:
 Translate from English ito Japanese:
 ```
-translate_csv.py --from en --to ja -c translate.csv
+python translate_csv.py --from en --to ja -c translate.csv
 ```
 
 And you will get ouput file as "source csv file" + _LanguageCode_ + .csv. For example you tranlated English from Japanese then the output file name will be translate_ja.csv
