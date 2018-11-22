@@ -15,6 +15,8 @@ https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html
 2. Install boto3(aws sdk for python)
 https://aws.amazon.com/sdk-for-python/?nc1=h_ls
 
+3. Python3 required  
+
 ## How to use
 - Source file preparation
 CSV file format requires 2 thing. super simple.
