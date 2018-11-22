@@ -44,5 +44,5 @@ python translate_csv.py --from en --to ja -c translate.csv
 And you will get ouput file as "source csv file" + _LanguageCode_ + .csv. For example you tranlated English from Japanese then the output file name will be translate_ja.csv
 
 
-- Advanced Option
+- Advanced Option  
 If you have performance trouble, try increase concurrency using '--concurrency' option.
